@@ -784,26 +784,29 @@ input:disabled, select:disabled, textarea:disabled {
       <div style="position:relative;">
         <select class="form-input" id="transportMode" style="appearance:none;-webkit-appearance:none;cursor:pointer;padding-right:38px;">
           <option value="" disabled selected id="transport-placeholder">How will you be travelling?</option>
-          <optgroup label="🌿 Greenest Options">
+          <optgroup label="🚆 Train / Bus">
           <option value="Railway">🚆 Railway (35g CO₂/km)</option>
-          <option value="Urban Bus">🚌 Urban Bus (28g CO₂/km)</option>
-          <option value="Scooter (EV)">🛵 Scooter — EV (46g CO₂/km)</option>
-          <option value="Bike (EV)">🏍️ Bike / Motorcycle — EV (47g CO₂/km)</option>
-          <option value="Auto Rickshaw (EV)">🛺 Auto Rickshaw — EV (44g CO₂/km)</option>
           <option value="Intercity Bus (EV)">🚌 Intercity Bus — EV (34g CO₂/km)</option>
-          </optgroup>
-          <optgroup label="🌱 Other Options">
-          <option value="Scooter (Petrol)">🛵 Scooter — Petrol (74g CO₂/km)</option>
-          <option value="Bike (Petrol)">🏍️ Bike / Motorcycle — Petrol (65g CO₂/km)</option>
-          <option value="Auto Rickshaw (CNG)">🛺 Auto Rickshaw — CNG (75g CO₂/km)</option>
-          <option value="Auto Rickshaw (Diesel)">🛺 Auto Rickshaw — Diesel (104g CO₂/km)</option>
           <option value="Intercity Bus (Diesel)">🚌 Intercity Bus — Diesel (61g CO₂/km)</option>
+          <option value="Local Bus">🚌 Local Bus (28g CO₂/km)</option>
+          </optgroup>
+          <optgroup label="🚗 Car">
           <option value="Car (EV)">🚗 Car — EV (118g CO₂/km)</option>
           <option value="Car (Petrol)">🚗 Car — Petrol (162g CO₂/km)</option>
-          <option value="Airplane">✈️ Airplane (121g CO₂/km)</option>
           </optgroup>
-          <optgroup label="➕ Other">
-          <option value="Other">❓ Other (Please specify)</option>
+          <optgroup label="🛵 2-Wheeler">
+          <option value="Scooter (EV)">🛵 Scooter — EV (46g CO₂/km)</option>
+          <option value="Scooter (Petrol)">🛵 Scooter — Petrol (74g CO₂/km)</option>
+          <option value="Bike (EV)">🏍️ Bike — EV (47g CO₂/km)</option>
+          <option value="Bike (Petrol)">🏍️ Bike — Petrol (65g CO₂/km)</option>
+          </optgroup>
+          <optgroup label="🛺 Auto Rickshaw">
+          <option value="Auto Rickshaw (EV)">🛺 Auto Rickshaw — EV (44g CO₂/km)</option>
+          <option value="Auto Rickshaw (CNG)">🛺 Auto Rickshaw — CNG (75g CO₂/km)</option>
+          <option value="Auto Rickshaw (Diesel)">🛺 Auto Rickshaw — Diesel (104g CO₂/km)</option>
+          </optgroup>
+          <optgroup label="✈️ Air">
+          <option value="Airplane">✈️ Airplane (121g CO₂/km)</option>
           </optgroup>
 
         </select>
@@ -906,13 +909,17 @@ async function fetchHeadcounts() {
       return cols;
     }
 
-    const lines = text.trim().split('\n').slice(1); // skip header
+    const allLines = text.trim().split('\n');
+    const header = parseCSVRow(allLines[0]);
+    const eventsCol = header.findIndex(h => h.toLowerCase().includes('event'));
+    const hcCol = header.findIndex(h => h.toLowerCase().includes('headcount') || h.toLowerCase().includes('head count') || h.toLowerCase().includes('guests') || h.toLowerCase().includes('attending'));
+    const lines = allLines.slice(1);
     const counts = { Nichiyathartham: 0, Muhurtham: 0, PreWeddingReception: 0, PostWeddingReception: 0, total: 0 };
 
     lines.forEach(line => {
       const r = parseCSVRow(line);
-      const events = (r[7] || '').toLowerCase();
-      const headcount = parseInt(r[11]) || 0;
+      const events = (r[eventsCol] || '').toLowerCase();
+      const headcount = parseInt(r[hcCol]) || 0;
       if (!headcount) return; // skip rows with no headcount (test/wishes rows)
       if (events.includes('nichiyathartham'))      counts.Nichiyathartham      += headcount;
       if (events.includes('muhurtham'))             counts.Muhurtham             += headcount;
@@ -1034,7 +1041,7 @@ const T = {
     lblMsg:'தம்பதியருக்கு ஒரு செய்தி', lblGift:'பரிசு வழிகாட்டுதல்கள்',
     giftIntro:'எங்கள் மதிப்புகளுக்கு ஏற்ற பரிசுகளை கவனமாக தேர்ந்தெடுத்துள்ளோம்.',
     giftWelcomeTitle:'✓ வரவேற்கும் பரிசுகள்',
-    giftWelcomeList:'🌳 தோட்டங்களுக்கு நன்கொடை — <a href="https://www.greenr.gifts" target="_blank" style="color:var(--eucalyptus)">greenr.gifts</a><br>🍵 மண்பாண்டம் <br>🛍️ Amazon / Flipkart இதர பரிசு அட்டைகள்',
+    giftWelcomeList:'🌳 தோட்டங்களுக்கு நன்கொடை — <a href="https://www.greenr.gifts" target="_blank" style="color:var(--eucalyptus)">greenr.gifts</a><br>🍵மண்பாண்டங்கள்  <br>🛍️ Amazon/Flipkart இதர பரிசு அட்டைகள்',
     giftAvoidTitle:'✕ தவிர்க்க வேண்டியவை',
     giftAvoidList:'🐄 விலங்கு அடிப்படையிலான பொருட்கள் (தோல், பட்டு, கம்பளி, பால் அழகுசாதனம், தேன்)<br>🧴 முழுக்க பிளாஸ்டிக் பொருட்கள்<br>✈️ இறக்குமதி செய்யப்பட்ட பரிசுகள்<br>⏳ கடிகாரங்கள்<br>🛐 மத சிலைகள் அல்லது படங்கள்',
     btnSaveGift:'வழிகாட்டுதலை சேமிக்கவும்',
@@ -1178,7 +1185,7 @@ function toggleCheckWishes(el) {
 // ── CARBON DATA ──────────────────────────────────────
 const carbonData = {
   'Railway':              {gco2:35,  label:'Indian Railways',           tier:'great'},
-  'Urban Bus':            {gco2:28,  label:'Urban Bus (Diesel)',         tier:'great'},
+  'Local Bus':            {gco2:28,  label:'Local Bus (Diesel)',         tier:'great'},
   'Scooter (EV)':         {gco2:46,  label:'Electric Scooter',          tier:'great'},
   'Scooter (Petrol)':     {gco2:74,  label:'Petrol Scooter',            tier:'okay'},
   'Bike (EV)':            {gco2:47,  label:'Electric Motorcycle',       tier:'great'},
@@ -1395,7 +1402,7 @@ async function submitRSVP() {
 
 // ── SAVE GIFT GUIDE ──────────────────────────────────
 function saveGiftGuide() {
-  const guide = "🌿 Rupadharshnee & Aravind — Gift Guidelines\n\n✓ WELCOME GIFTS:\n🌳 Donation to Plantations — greenr.gifts\n🍳 Earthenware / Cast Iron (no Teflon)\n🛍️ Amazon / Flipkart Gift Cards\n\n✕ PLEASE AVOID:\n🐄 Animal-based products (leather, silk, wool, dairy cosmetics, honey)\n🧴 Completely plastic products\n✈️ Imported gifts\n⏳ Clocks\n🛐 Religious idols or pictures\n\nWith love — Rupadharshnee & Aravind 🌍";
+  const guide = "🌿 Rupadharshnee & Aravind — Gift Guidelines\n\n✓ WELCOME GIFTS:\n🌳 Donation to Plantations — greenr.gifts\n🍵 Earthenware \n🛍️ Gift Cards\n\n✕ PLEASE AVOID:\n🐄 Animal-based products (leather, silk, wool, dairy cosmetics, honey)\n🧴 Completely plastic products\n✈️ Imported gifts\n⏳ Clocks\n🛐 Religious idols or pictures\n\nWith love — Rupadharshnee & Aravind 🌍";
   if (navigator.share) {
     navigator.share({title:'Gift Guidelines — R & A Wedding',text:guide})
       .then(() => { document.getElementById('saveConfirm').style.display='block'; })
