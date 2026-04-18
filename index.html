@@ -891,46 +891,64 @@ const SHEET_ID = '1reAc3rwyGLhBCTI5-iXkPRdZgQLYUkV2z_R_vcqIuhE';
 const GID      = '1737009265';
 
 async function fetchHeadcounts() {
-  try {
+try {
     const url = `https://docs.google.com/spreadsheets/d/1reAc3rwyGLhBCTI5-iXkPRdZgQLYUkV2z_R_vcqIuhE/export?format=csv&gid=1737009265`;
     const res  = await fetch(url);
     const text = await res.text();
 
-    // Proper quoted-CSV row parser — handles commas inside quoted fields
     function parseCSVRow(line) {
       const cols = []; let cur = ''; let inQ = false;
       for (let i = 0; i < line.length; i++) {
         const ch = line[i];
         if (ch === '"') { inQ = !inQ; }
-        else if (ch === ',' && !inQ) { cols.push(cur); cur = ''; }
+        else if (ch === ',' && !inQ) { cols.push(cur.trim()); cur = ''; }
         else { cur += ch; }
       }
-      cols.push(cur);
+      cols.push(cur.trim());
       return cols;
     }
 
     const allLines = text.trim().split('\n');
     const header = parseCSVRow(allLines[0]);
-    const eventsCol = header.findIndex(h => h.toLowerCase().includes('event'));
-    const hcCol = header.findIndex(h => h.toLowerCase().includes('headcount') || h.toLowerCase().includes('head count') || h.toLowerCase().includes('guests') || h.toLowerCase().includes('attending'));
-    const lines = allLines.slice(1);
+
+    // Find columns — log so you can verify
+    const eventsCol = header.findIndex(h => h.toLowerCase().includes('events attending'));
+    const hcCol     = header.findIndex(h => h.toLowerCase() === 'headcount');
+
+    console.log('Headers:', header);
+    console.log('eventsCol index:', eventsCol, '| hcCol index:', hcCol);
+
     const counts = { Nichiyathartham: 0, Muhurtham: 0, PreWeddingReception: 0, PostWeddingReception: 0, total: 0 };
 
-    lines.forEach(line => {
+    allLines.slice(1).forEach((line, rowIdx) => {
       const r = parseCSVRow(line);
-      const events = (r[eventsCol] || '').toLowerCase();
+      const eventsRaw = (r[eventsCol] || '').toLowerCase().trim();
       const headcount = parseInt(r[hcCol]) || 0;
-      if (!headcount) return; // skip rows with no headcount (test/wishes rows)
-      if (events.includes('nichiyathartham'))      counts.Nichiyathartham      += headcount;
-      if (events.includes('muhurtham'))             counts.Muhurtham             += headcount;
-      if (events.includes('pre-wedding reception')) counts.PreWeddingReception  += headcount;
-      // Legacy "reception" entries (old form) + new "post-wedding reception" both count here
-      if (events.includes('post-wedding reception') || (events.includes('reception') && !events.includes('pre-wedding reception')))
-        counts.PostWeddingReception += headcount;
+
+      console.log(`Row ${rowIdx + 2}: events="${eventsRaw}" | headcount=${headcount}`);
+
+      if (!eventsRaw || !headcount) return;
+      if (eventsRaw.includes('not visiting') || eventsRaw.includes('sending wishes')) return;
+
+      // Split on pipe in case multiple events are in one cell
+      const eventParts = eventsRaw.split('|').map(e => e.trim());
+
+      eventParts.forEach(part => {
+        if (part.includes('nichiyath'))                          counts.Nichiyathartham      += headcount;
+        if (part.includes('muhurtham'))                          counts.Muhurtham             += headcount;
+        if (part.includes('pre-wedding') || part.includes('pre wedding')) counts.PreWeddingReception  += headcount;
+        if (part.includes('post-wedding') || part.includes('post wedding')) counts.PostWeddingReception += headcount;
+      });
+
       counts.total += headcount;
     });
+
+    console.log('Final counts:', counts);
     return counts;
-  } catch(e) { return null; }
+  } catch(e) {
+    console.error('Headcount fetch error:', e);
+    return null;
+  }
 }
 
 async function initHeadcounts() {
