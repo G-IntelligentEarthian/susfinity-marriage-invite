@@ -605,10 +605,10 @@ input:disabled, select:disabled, textarea:disabled {
 <div class="page">
 
   <nav class="sticky-nav">
-    <button class="nav-btn active" onclick="scrollTo('#hero')" data-en="Home" data-ta="முகப்பு">Home</button>
-    <button class="nav-btn" onclick="scrollTo('#events')" data-en="Events" data-ta="நிகழ்வுகள்">Events</button>
-    <button class="nav-btn" onclick="scrollTo('#notes')" data-en="Our Ask" data-ta="வேண்டுகோள்">Our Ask</button>
-    <button class="nav-btn" onclick="scrollTo('#rsvp')" data-en="RSVP" data-ta="வருகை உறுதி">RSVP</button>
+    <button class="nav-btn active" onclick="navScrollTo('#hero')" data-en="Home" data-ta="முகப்பு">Home</button>
+    <button class="nav-btn" onclick="navScrollTo('#events')" data-en="Events" data-ta="நிகழ்வுகள்">Events</button>
+    <button class="nav-btn" onclick="navScrollTo('#notes')" data-en="Our Ask" data-ta="வேண்டுகோள்">Our Ask</button>
+    <button class="nav-btn" onclick="navScrollTo('#rsvp')" data-en="RSVP" data-ta="வருகை உறுதி">RSVP</button>
     <button class="nav-btn lang-toggle" onclick="toggleLang()" id="langToggle">தமிழ்</button>
   </nav>
 
@@ -1218,7 +1218,7 @@ function toggleLang() {
 }
 
 // ── NAV ──────────────────────────────────────────────
-function scrollTo(id) { document.querySelector(id).scrollIntoView({behavior:'smooth'}); }
+function navScrollTo(id) { document.querySelector(id).scrollIntoView({behavior:'smooth'}); }
 const sections = ['hero','events','notes','rsvp'];
 const navBtns  = document.querySelectorAll('.nav-btn:not(.lang-toggle)');
 const secObs = new IntersectionObserver(entries => {
