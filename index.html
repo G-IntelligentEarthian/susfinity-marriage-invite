@@ -59,6 +59,42 @@
   /* Add this to ensure content takes up space even when invisible */
 
 }
+    /* ── SCRATCH TO REVEAL EVENT CARD ── */
+  .event-card-wrap {
+    position: relative;
+    border-radius: 20px;
+    overflow: hidden;
+  }
+  .scratch-canvas {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    touch-action: none;
+    z-index: 10;
+    cursor: crosshair;
+  }
+  .scratch-hint-overlay {
+    position: absolute;
+    inset: 0;
+    border-radius: 20px;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    gap: 8px;
+    pointer-events: none;
+    z-index: 11;
+    transition: opacity 0.4s ease;
+  }
+  .scratch-hint-overlay .hint-icon { font-size: 28px; }
+  .scratch-hint-overlay .hint-text {
+    font-family: Jost, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2.5px;
+    text-transform: uppercase;
+    color: #3d6b5e;
+    opacity: 0.85;
+  }
 
   .note-item.visible { opacity:1; transform:translateX(0); }
   .event-card { opacity:0; transform:translateY(32px); transition:opacity 0.6s ease, transform 0.6s ease, box-shadow 0.3s ease; border-radius:20px; }
@@ -652,52 +688,89 @@ input:disabled, select:disabled, textarea:disabled {
 
 <!-- EVENTS -->
 <section class="events" id="events">
-<div class="section-sep reveal"></div>
-<h2 class="events-heading reveal">The Celebrations</h2>
-<p class="events-sub reveal">Join us across these sacred days</p>
+  <div class="section-sep reveal"></div>
+  <h2 class="events-heading reveal">The Celebrations</h2>
+  <p class="events-sub reveal">Join us across these sacred days</p>
 
-<div class="event-cards-row">
-  <div class="event-card reveal">
-    <span class="leaf-icon">🌿</span>
-    <div class="day-tag">Day One · Wedding</div>
-    <h3>Nichiyathartham</h3>
-    <p class="event-meaning">Betrothal Ceremony</p>
-    <p class="event-date">Tuesday, 16 June 2026</p>
-    <p class="event-time">After 12:00 PM</p>
-    <p class="event-venue">📍 Dindigul</p>
-    <p id="hc-nichiyathartham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
+  <div class="event-cards-row">
+
+    <!-- Card 1: Nichiyathartham -->
+    <div class="event-card-wrap reveal">
+      <div class="event-card">
+        <span class="leaf-icon">🌿</span>
+        <div class="day-tag">Day One · Wedding</div>
+        <h3>Nichiyathartham</h3>
+        <p class="event-meaning">Betrothal Ceremony</p>
+        <p class="event-date">Tuesday, 16 June 2026</p>
+        <p class="event-time">After 12:00 PM</p>
+        <p class="event-venue">📍 Dindigul</p>
+        <p id="hc-nichiyathartham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
+      </div>
+      <canvas class="scratch-canvas" id="sc-1"></canvas>
+      <div class="scratch-hint-overlay" id="sh-1">
+        <span class="hint-icon">🌿</span>
+        <span class="hint-text">Scratch to reveal</span>
+      </div>
+    </div>
+
+    <!-- Card 2: Pre-Wedding Reception -->
+    <div class="event-card-wrap reveal" style="transition-delay:0.08s">
+      <div class="event-card">
+        <span class="leaf-icon">🌸</span>
+        <div class="day-tag">Day One · Evening</div>
+        <h3>Pre-Wedding Reception</h3>
+        <p class="event-meaning">Celebration Evening</p>
+        <p class="event-date">Tuesday, 16 June 2026</p>
+        <p class="event-time">After 6:00 PM</p>
+        <p class="event-venue">📍 Dindigul</p>
+        <p id="hc-prewedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
+      </div>
+      <canvas class="scratch-canvas" id="sc-2"></canvas>
+      <div class="scratch-hint-overlay" id="sh-2">
+        <span class="hint-icon">🌿</span>
+        <span class="hint-text">Scratch to reveal</span>
+      </div>
+    </div>
+
+    <!-- Card 3: Muhurtham -->
+    <div class="event-card-wrap reveal" style="transition-delay:0.16s">
+      <div class="event-card">
+        <span class="leaf-icon">🌸</span>
+        <div class="day-tag">Day Two · Wedding</div>
+        <h3>Muhurtham</h3>
+        <p class="event-meaning">Wedding Ceremony</p>
+        <p class="event-date">Wednesday, 17 June 2026</p>
+        <p class="event-time">4:00 AM – 7:20 AM</p>
+        <p class="event-venue">📍 Dindigul</p>
+        <p id="hc-muhurtham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
+      </div>
+      <canvas class="scratch-canvas" id="sc-3"></canvas>
+      <div class="scratch-hint-overlay" id="sh-3">
+        <span class="hint-icon">🌿</span>
+        <span class="hint-text">Scratch to reveal</span>
+      </div>
+    </div>
+
+    <!-- Card 4: Post-Wedding Reception -->
+    <div class="event-card-wrap reveal" style="transition-delay:0.24s">
+      <div class="event-card">
+        <span class="leaf-icon">🌺</span>
+        <div class="day-tag">Reception</div>
+        <h3>Post-Wedding Reception</h3>
+        <p class="event-meaning">&nbsp;</p>
+        <p class="event-date">Sunday, 21 June 2026</p>
+        <p class="event-time">After 6:00 PM</p>
+        <p class="event-venue">📍 Pollachi</p>
+        <p id="hc-postwedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
+      </div>
+      <canvas class="scratch-canvas" id="sc-4"></canvas>
+      <div class="scratch-hint-overlay" id="sh-4">
+        <span class="hint-icon">🌿</span>
+        <span class="hint-text">Scratch to reveal</span>
+      </div>
+    </div>
+
   </div>
-  <div class="event-card reveal" style="transition-delay:0.08s">
-    <span class="leaf-icon">🌸</span>
-    <div class="day-tag">Day One · Evening</div>
-    <h3>Pre-Wedding Reception</h3>
-    <p class="event-meaning">Celebration Evening</p>
-    <p class="event-date">Tuesday, 16 June 2026</p>
-    <p class="event-time">After 6:00 PM</p>
-    <p class="event-venue">📍 Dindigul</p>
-    <p id="hc-prewedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
-  </div>
-  <div class="event-card reveal" style="transition-delay:0.16s">
-    <span class="leaf-icon">🌸</span>
-    <div class="day-tag">Day Two · Wedding</div>
-    <h3>Muhurtham</h3>
-    <p class="event-meaning">Wedding Ceremony</p>
-    <p class="event-date">Wednesday, 17 June 2026</p>
-    <p class="event-time">4:00 AM – 7:20 AM</p>
-    <p class="event-venue">📍 Dindigul</p>
-    <p id="hc-muhurtham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
-  </div>
-  <div class="event-card reveal" style="transition-delay:0.24s">
-    <span class="leaf-icon">🌺</span>
-    <div class="day-tag">Reception</div>
-    <h3>Post-Wedding Reception</h3>
-    <p class="event-meaning">&nbsp;</p>
-    <p class="event-date">Sunday, 21 June 2026</p>
-    <p class="event-time">After 6:00 PM</p>
-    <p class="event-venue">📍 Pollachi</p>
-    <p id="hc-postwedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
-  </div>
-</div>
 </section>
 
 <!-- NOTES -->
@@ -1527,6 +1600,104 @@ window.addEventListener('load', function(){
 
 });
 
+
+      // ── SCRATCH TO REVEAL EVENT CARDS ────────────────────
+  function initCardScratch(canvasId, hintId) {
+    const canvas = document.getElementById(canvasId);
+    const hint   = document.getElementById(hintId);
+    if (!canvas) return;
+
+    const wrap = canvas.parentElement;
+    const w = wrap.offsetWidth;
+    const h = wrap.offsetHeight;
+    canvas.width  = w;
+    canvas.height = h;
+
+    const ctx = canvas.getContext('2d', { willReadFrequently: true });
+
+    // Earthy leaf texture — brand aligned
+    const grad = ctx.createLinearGradient(0, 0, w, h);
+    grad.addColorStop(0,   '#7aab96');
+    grad.addColorStop(0.4, '#6F9F8F');
+    grad.addColorStop(0.7, '#5a8f7d');
+    grad.addColorStop(1,   '#3d6b5e');
+    ctx.fillStyle = grad;
+    ctx.roundRect(0, 0, w, h, 20);
+    ctx.fill();
+
+    // Subtle leaf pattern dots
+    ctx.fillStyle = 'rgba(255,255,255,0.06)';
+    for (let i = 0; i < 18; i++) {
+      const x = Math.random() * w;
+      const y = Math.random() * h;
+      const r = 6 + Math.random() * 18;
+      ctx.beginPath();
+      ctx.ellipse(x, y, r, r * 0.5, Math.random() * Math.PI, 0, Math.PI * 2);
+      ctx.fill();
+    }
+
+    // Center text
+    ctx.fillStyle = 'rgba(255,255,255,0.25)';
+    ctx.font = '300 10px Jost, sans-serif';
+    ctx.textAlign = 'center';
+    ctx.textBaseline = 'middle';
+    ctx.letterSpacing = '3px';
+    ctx.fillText('SCRATCH TO REVEAL', w / 2, h / 2 + 28);
+
+    ctx.globalCompositeOperation = 'destination-out';
+
+    let painting = false;
+
+    function getPos(e) {
+      const rect = canvas.getBoundingClientRect();
+      const src  = e.touches ? e.touches[0] : e;
+      return { x: src.clientX - rect.left, y: src.clientY - rect.top };
+    }
+
+    function scratch(e) {
+      if (!painting) return;
+      e.preventDefault();
+      const { x, y } = getPos(e);
+      ctx.beginPath();
+      ctx.arc(x, y, 28, 0, Math.PI * 2);
+      ctx.fill();
+      checkRevealed();
+    }
+
+    function checkRevealed() {
+      const pixels      = ctx.getImageData(0, 0, w, h).data;
+      let   transparent = 0;
+      for (let i = 3; i < pixels.length; i += 16) {
+        if (pixels[i] < 128) transparent++;
+      }
+      if (transparent / (pixels.length / 16) > 0.35) fullyReveal();
+    }
+
+    function fullyReveal() {
+      canvas.style.transition = 'opacity 0.5s ease';
+      canvas.style.opacity    = '0';
+      if (hint) { hint.style.opacity = '0'; }
+      setTimeout(() => {
+        canvas.style.display = 'none';
+        if (hint) hint.style.display = 'none';
+      }, 500);
+    }
+
+    canvas.addEventListener('mousedown',  ()  => painting = true);
+    canvas.addEventListener('mouseup',    ()  => painting = false);
+    canvas.addEventListener('mouseleave', ()  => painting = false);
+    canvas.addEventListener('mousemove',  scratch);
+    canvas.addEventListener('touchstart', (e) => { painting = true; e.preventDefault(); }, { passive: false });
+    canvas.addEventListener('touchend',   ()  => painting = false);
+    canvas.addEventListener('touchmove',  scratch, { passive: false });
+  }
+
+  window.addEventListener('load', () => {
+    // Small delay so cards are sized correctly after layout
+    setTimeout(() => {
+      [1, 2, 3, 4].forEach(i => initCardScratch(`sc-${i}`, `sh-${i}`));
+    }, 500);
+  });
 
 </script>
 
