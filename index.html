@@ -1321,34 +1321,28 @@ const carbonMessages = {
 };
 
 // ── GOOGLE ROUTES API ────────────────────────────────
-async function getDistanceKm(origin) {
-  // Determine which venues the guest is actually attending
-  const checkedEvents = Array.from(document.querySelectorAll('#attendanceGroup .check-label.checked:not(#ev4-wrap)'))
-    .map(el => el.dataset.value);
-  const goingToPollachi = checkedEvents.some(e => e.toLowerCase().includes('pollachi'));
-  const goingToDindigul = checkedEvents.some(e => e.toLowerCase().includes('dindigul'));
-
-  const destinations = [];
-  if (goingToDindigul) destinations.push('Dindigul, Tamil Nadu, India');
-  if (goingToPollachi) destinations.push('Pollachi, Tamil Nadu, India');
-  // If nothing checked yet, fall back to both
-  if (destinations.length === 0) {
-    destinations.push('Dindigul, Tamil Nadu, India', 'Pollachi, Tamil Nadu, India');
-  }
-
-  let maxKm = null; // use farthest attended venue for worst-case offset
-  for (const dest of destinations) {
-    try {
-      const res = await fetch('https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix', {
-        method:'POST',
-        headers:{'Content-Type':'application/json','X-Goog-Api-Key':MAPS_API_KEY,'X-Goog-FieldMask':'originIndex,destinationIndex,distanceMeters,status'},
-        body:JSON.stringify({origins:[{waypoint:{address:origin}}],destinations:[{waypoint:{address:dest}}],travelMode:'DRIVE'})
-      });
-      const rows = await res.json();
-      if (Array.isArray(rows)) rows.forEach(row => { if (row.distanceMeters) { const km = row.distanceMeters/1000; if (maxKm===null||km>maxKm) maxKm=km; }});
-    } catch(e) {}
-  }
-  return maxKm;
+async function getDistanceKm(origin, destination) {
+  try {
+    const res = await fetch('https://routes.googleapis.com/distanceMatrix/v2:computeRouteMatrix', {
+      method: 'POST',
+      headers: {
+        'Content-Type': 'application/json',
+        'X-Goog-Api-Key': MAPS_API_KEY,
+        'X-Goog-FieldMask': 'originIndex,destinationIndex,distanceMeters,status'
+      },
+      body: JSON.stringify({
+        origins: [{ waypoint: { address: origin } }],
+        destinations: [{ waypoint: { address: destination } }],
+        travelMode: 'DRIVE'
+      })
+    });
+    const rows = await res.json();
+    if (Array.isArray(rows)) {
+      const row = rows.find(r => r.distanceMeters);
+      return row ? row.distanceMeters / 1000 : null;
+    }
+    return null;
+  } catch(e) { return null; }
 }
 
 // ── CARBON CALC ──────────────────────────────────────
@@ -1401,15 +1395,35 @@ async function updateCarbonCalc() {
   if (origin) {
     statEl.textContent = 'Calculating your journey distance…';
     try {
-      const km = await getDistanceKm(origin + ', India');
-      if (km) {
-        calculatedKm = Math.round(km);
-        const perPersonKg = parseFloat((d.gco2 * km / 1000).toFixed(1));
+      // Determine which venues the guest is attending
+      const selected = Array.from(document.querySelectorAll('#attendanceGroup .check-label.checked'))
+                            .map(el => el.dataset.value || '');
+      const goesDindigul = selected.some(v => v.includes('Dindigul'));
+      const goesPollachi = selected.some(v => v.includes('Pollachi'));
+
+      // Fetch distances for relevant legs
+      const [kmDindigul, kmPollachi] = await Promise.all([
+        goesDindigul ? getDistanceKm(origin + ', India', 'Dindigul, Tamil Nadu, India') : Promise.resolve(0),
+        goesPollachi ? getDistanceKm(origin + ', India', 'Pollachi, Tamil Nadu, India') : Promise.resolve(0)
+      ]);
+
+      const totalKm = Math.round(((kmDindigul || 0) + (kmPollachi || 0)) * 2);
+
+      if (totalKm > 0) {
+        calculatedKm = totalKm;
+        const perPersonKg = parseFloat((d.gco2 * totalKm / 1000).toFixed(1));
         const groupKg     = parseFloat((perPersonKg * totalPax).toFixed(1));
         calculatedCo2Kg   = groupKg;
 
-        statText = '~' + calculatedKm + ' km from ' + origin + ' · ' +
-                   displayLabel + ' · ~' + perPersonKg + ' kg CO₂ per person';
+        let legDesc = '';
+        if (goesDindigul && goesPollachi)
+          legDesc = '~' + Math.round(kmDindigul) + ' km to Dindigul + ~' + Math.round(kmPollachi) + ' km to Pollachi (round-trip)';
+        else if (goesDindigul)
+          legDesc = '~' + totalKm + ' km round-trip to Dindigul';
+        else
+          legDesc = '~' + totalKm + ' km round-trip to Pollachi';
+
+        statText = legDesc + ' from ' + origin + ' · ' + displayLabel + ' · ~' + perPersonKg + ' kg CO₂ per person';
 
         totEl.style.display = 'block';
         const paxLabel = totalPax === 1 ? 'just you' : 'you + ' + guestsRaw + ' guest' + (guestsRaw > 1 ? 's' : '');
