@@ -175,6 +175,7 @@
   .check-label.checked { background:rgba(111,159,143,0.12); border-color:var(--eucalyptus); color:var(--deep-green); animation:checkBounce 0.35s cubic-bezier(0.36,0.07,0.19,0.97); }
   .check-box { width:18px; height:18px; border:1.5px solid rgba(168,195,166,0.7); border-radius:5px; background:white; flex-shrink:0; display:flex; align-items:center; justify-content:center; transition:background 0.2s; font-size:11px; }
   .check-label.checked .check-box { background:var(--eucalyptus); border-color:var(--eucalyptus); color:white; }
+  .check-label.checked .check-box::after { content: '✓'; font-size:11px; }
 
   /* ── CARBON BOX ── */
   .carbon-box { margin-top:16px; border-radius:14px; padding:18px 20px; font-size:13px; line-height:1.7; display:none; animation:slideDown 0.4s ease both; }
@@ -826,23 +827,23 @@ input:disabled, select:disabled, textarea:disabled {
       <label class="form-label" id="lbl-events">Events Attending *</label>
       <div id="attendanceGroup" style="display:flex;flex-direction:column;gap:10px;">
         <div class="check-label" onclick="toggleCheck(this)" data-value="Nichiyathartham (Betrothal) — Tuesday, 16 June, Dindigul">
-          <span class="check-box">✓</span>
+          <span class="check-box"></span>
           <span id="ev1">Nichiyathartham &nbsp;<small style="opacity:0.65">Betrothal · Tue, 16 June · Dindigul</small></span>
         </div>
         <div class="check-label" onclick="toggleCheck(this)" data-value="Pre-Wedding Reception — Tuesday, 16 June, After 6:00 PM, Dindigul">
-          <span class="check-box">✓</span>
+          <span class="check-box"></span>
           <span id="ev3b">Pre-Wedding Reception &nbsp;<small style="opacity:0.65">Tue, 16 June · After 6 PM · Dindigul</small></span>
         </div>
         <div class="check-label" onclick="toggleCheck(this)" data-value="Muhurtham (Wedding) — Wednesday, 17 June, Dindigul">
-          <span class="check-box">✓</span>
+          <span class="check-box"></span>
           <span id="ev2">Muhurtham &nbsp;<small style="opacity:0.65">Wedding · Wed, 17 June · Dindigul</small></span>
         </div>
         <div class="check-label" onclick="toggleCheck(this)" data-value="Post-Wedding Reception — Sunday, 21 June, After 6:00 PM, Pollachi">
-          <span class="check-box">✓</span>
+          <span class="check-box"></span>
           <span id="ev3">Post-Wedding Reception &nbsp;<small style="opacity:0.65">Sun, 21 June · Pollachi</small></span>
         </div>
         <div class="check-label" onclick="toggleCheckWishes(this)" data-value="Not visiting — Sending wishes and blessings" id="ev4-wrap" style="border-style:dashed;border-color:rgba(168,195,166,0.5);background:rgba(243,241,235,0.5);">
-          <span class="check-box" style="border-color:rgba(168,195,166,0.5);">✓</span>
+          <span class="check-box" style="border-color:rgba(168,195,166,0.5);"></span>
           <span id="ev4">Not visiting &nbsp;<small style="opacity:0.65">Sending wishes &amp; blessings 💚</small></span>
         </div>
       </div>
