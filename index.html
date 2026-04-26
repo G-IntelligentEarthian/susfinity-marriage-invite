@@ -20,11 +20,6 @@
   html { scroll-behavior: smooth; }
   body {
   background-color: var(--petal);
-  background-image: url('image-2.jpg');
-  background-size: cover;
-  background-position: center center;
-  background-attachment: fixed;
-  background-repeat: no-repeat;
   font-family: Jost, sans-serif;
   color: var(--stone);
   min-height: 100vh;
@@ -33,11 +28,24 @@
 
   body::before {
   content: "";
-  position: fixed;
+  position: fixed;        /* fixed = stays in place as page scrolls */
+  inset: 0;
+  background-image: url('image-2.jpg');
+  background-size: cover;
+  background-position: center center;
+  background-repeat: no-repeat;
+  background-attachment: scroll; /* scroll on the pseudo-element = safe on iOS */
+  z-index: -1;            /* sits behind everything */
+  pointer-events: none;
+  }
+
+  body::after {
+  content: "";
+  position: fixed;        /* same fixed layer — pure colour overlay on top */
   inset: 0;
   background: rgba(249, 247, 242, 0.72);
+  z-index: -1;
   pointer-events: none;
-  z-index: 0;
   }
   .page { position: relative; z-index: 1; }
 
