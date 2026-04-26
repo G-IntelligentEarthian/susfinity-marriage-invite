@@ -160,7 +160,7 @@
   .note-icon { font-size:22px; flex-shrink:0; margin-top:1px; }
 
   /* ── RSVP ── */
-  .rsvp-section { padding:40px 20px 80px; display:flex; flex-direction:column; align-items:center; }
+  .rsvp-section { padding:40px 20px 80px; display:flex; flex-direction:column; align-items:center; position:relative; overflow:hidden; background-image:url('image-2.jpg'); background-size:cover; background-position:center 30%; background-attachment:fixed; } .rsvp-section::before { content:""; position:absolute; inset:0; background:rgba(249,247,242,0.82); backdrop-filter:blur(2px); z-index:0; } .rsvp-section > * { position:relative; z-index:1; }
   .section-title { font-family:'Cormorant Garamond',serif; font-size:clamp(1.4rem,3.5vw,1.85rem); color:var(--deep-green); text-align:center; margin-bottom:8px; }
   .section-sub { font-size:11px; letter-spacing:2.5px; text-transform:uppercase; color:var(--eucalyptus); text-align:center; margin-bottom:32px; }
   .section-sep { width:60px; height:2px; background:linear-gradient(90deg,transparent,var(--sage),transparent); margin:0 auto 40px; border-radius:2px; transition:transform 0.8s ease, opacity 0.8s ease; transform:scaleX(0); opacity:0; }
