@@ -537,6 +537,69 @@ input:disabled, select:disabled, textarea:disabled {
   @keyframes mBar { from{transform:scaleY(0.4);} to{transform:scaleY(1);} }
 
 
+
+  /* ── Location hint + links below envelope CTA ── */
+  .env-loc-statement {
+    font-family: Cormorant Garamond, serif;
+    font-style: italic;
+    font-size: 0.95rem;
+    color: var(--stone);
+    opacity: 0.78;
+    margin-top: 22px;
+    margin-bottom: 10px;
+    text-align: center;
+    letter-spacing: 0.3px;
+  }
+  .env-loc-hint {
+    font-family: Jost, sans-serif;
+    font-size: 10px;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--eucalyptus);
+    opacity: 0.72;
+    margin-bottom: 10px;
+    text-align: center;
+  }
+  .env-location-links {
+    display: flex;
+    gap: 12px;
+    justify-content: center;
+    flex-wrap: wrap;
+  }
+  .env-loc-btn {
+    display: inline-flex; align-items: center; gap: 6px;
+    background: rgba(243,241,235,0.85);
+    border: 1px solid rgba(168,195,166,0.55);
+    border-radius: 40px;
+    padding: 10px 20px;
+    font-family: Jost, sans-serif;
+    font-size: 11px; font-weight: 500; letter-spacing: 1.8px;
+    text-transform: uppercase;
+    color: var(--eucalyptus);
+    text-decoration: none;
+    cursor: pointer;
+    transition: background 0.2s, transform 0.2s, box-shadow 0.2s;
+    box-shadow: 0 4px 14px rgba(61,107,94,0.14);
+  }
+  .env-loc-btn:hover {
+    background: rgba(168,195,166,0.25);
+    transform: translateY(-2px);
+    box-shadow: 0 8px 22px rgba(61,107,94,0.22);
+  }
+  .env-loc-btn:active { transform: scale(0.97); }
+
+  /* ── Venue link in event cards ── */
+  .event-venue a {
+    color: var(--eucalyptus);
+    text-decoration: none;
+    border-bottom: 1px dashed rgba(111,159,143,0.45);
+    transition: color 0.2s, border-color 0.2s;
+  }
+  .event-venue a:hover {
+    color: var(--deep-green);
+    border-bottom-color: var(--deep-green);
+  }
+
 </style>
 </head>
 <body>
@@ -619,6 +682,16 @@ input:disabled, select:disabled, textarea:disabled {
     <button class="env-open-btn" id="envOpenBtn" aria-label="Open invitation">
       <span>🌿</span> Open Invitation
     </button>
+    <p class="env-loc-statement">Click the links below for the venue locations 🌿</p>
+    <p class="env-loc-hint">Tap a pin for directions</p>
+    <div class="env-location-links">
+      <a class="env-loc-btn" href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">
+        📍 Marriage · Dindigul
+      </a>
+      <a class="env-loc-btn" href="https://maps.app.goo.gl/fFBtNijfjS7QUNvp8" target="_blank" rel="noopener noreferrer">
+        📍 Reception · Pollachi
+      </a>
+    </div>
   </div>
 
 </div><!-- /env-overlay -->
@@ -731,7 +804,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">Betrothal Ceremony</p>
         <p class="event-date">Tuesday, 16 June 2026</p>
         <p class="event-time">After 12:00 PM</p>
-        <p class="event-venue">📍 Dindigul</p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul</a></p>
         <p id="hc-nichiyathartham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-1"></canvas>
@@ -750,7 +823,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">Celebration Evening</p>
         <p class="event-date">Tuesday, 16 June 2026</p>
         <p class="event-time">After 6:00 PM</p>
-        <p class="event-venue">📍 Dindigul</p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul</a></p>
         <p id="hc-prewedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-2"></canvas>
@@ -769,7 +842,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">Wedding Ceremony</p>
         <p class="event-date">Wednesday, 17 June 2026</p>
         <p class="event-time">4:00 AM – 7:20 AM</p>
-        <p class="event-venue">📍 Dindigul</p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul</a></p>
         <p id="hc-muhurtham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-3"></canvas>
@@ -788,7 +861,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">&nbsp;</p>
         <p class="event-date">Sunday, 21 June 2026</p>
         <p class="event-time">After 6:00 PM</p>
-        <p class="event-venue">📍 Pollachi</p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/fFBtNijfjS7QUNvp8" target="_blank" rel="noopener noreferrer">📍 Pollachi</a></p>
         <p id="hc-postwedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-4"></canvas>
