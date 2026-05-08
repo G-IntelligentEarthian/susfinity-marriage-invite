@@ -586,6 +586,15 @@ input:disabled, select:disabled, textarea:disabled {
     transform: translateY(-2px);
     box-shadow: 0 8px 22px rgba(61,107,94,0.22);
   }
+  .env-loc-btn .loc-detail {
+  display: block;
+  font-size: 9px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--stone);
+  opacity: 0.7;
+  margin-top: 2px;
+  }
   .env-loc-btn:active { transform: scale(0.97); }
 
   /* ── Venue link in event cards ── */
@@ -598,6 +607,15 @@ input:disabled, select:disabled, textarea:disabled {
   .event-venue a:hover {
     color: var(--deep-green);
     border-bottom-color: var(--deep-green);
+  }
+  .event-venue .loc-detail {
+  display: block;
+  font-size: 10px;
+  font-weight: 300;
+  letter-spacing: 1px;
+  color: var(--stone);
+  opacity: 0.65;
+  margin-top: 2px;
   }
 
 </style>
@@ -686,10 +704,12 @@ input:disabled, select:disabled, textarea:disabled {
     <p class="env-loc-hint">Tap a pin for directions</p>
     <div class="env-location-links">
       <a class="env-loc-btn" href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">
-        📍 Marriage · Dindigul
+  📍     Marriage · Dindigul
+        <span class="loc-detail">MSP Auditorium</span>
       </a>
       <a class="env-loc-btn" href="https://maps.app.goo.gl/fFBtNijfjS7QUNvp8" target="_blank" rel="noopener noreferrer">
         📍 Reception · Pollachi
+        <span class="loc-detail">Nallappa Mahal</span>
       </a>
     </div>
   </div>
@@ -777,11 +797,11 @@ input:disabled, select:disabled, textarea:disabled {
       invite you to join us in a mindful celebration<br>of our union, rooted in love and respect for the Earth.
     </p>
 
-    <div style="margin-top:36px;animation:fadeUp 1s ease 0.6s both">
-      <a href="#rsvp" style="display:inline-block;background:linear-gradient(135deg,#6F9F8F,#3d6b5e);color:white;font-family:Jost,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:14px 36px;border-radius:40px;text-decoration:none;transition:opacity 0.2s,transform 0.2s;" onmouseover="this.style.opacity=0.85;this.style.transform='translateY(-2px)'" onmouseout="this.style.opacity=1;this.style.transform='translateY(0)'">
-        RSVP Now
-      </a>
-    </div>
+<!--    <div style="margin-top:36px;animation:fadeUp 1s ease 0.6s both">-->
+<!--      <a href="#rsvp" style="display:inline-block;background:linear-gradient(135deg,#6F9F8F,#3d6b5e);color:white;font-family:Jost,sans-serif;font-size:11px;letter-spacing:2.5px;text-transform:uppercase;padding:14px 36px;border-radius:40px;text-decoration:none;transition:opacity 0.2s,transform 0.2s;" onmouseover="this.style.opacity=0.85;this.style.transform='translateY(-2px)'" onmouseout="this.style.opacity=1;this.style.transform='translateY(0)'">-->
+<!--        RSVP Now-->
+<!--      </a>-->
+<!--    </div>-->
     <div style="margin-top:40px;animation:fadeUp 1s ease 0.7s both">
       <a href="#events" style="color:var(--sage);font-size:20px;text-decoration:none;">↓</a>
     </div>
@@ -804,7 +824,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">Betrothal Ceremony</p>
         <p class="event-date">Tuesday, 16 June 2026</p>
         <p class="event-time">After 12:00 PM</p>
-        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul</a></p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul<span class="loc-detail"> · MSP Auditorium</span></a></p>
         <p id="hc-nichiyathartham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-1"></canvas>
@@ -823,7 +843,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">Celebration Evening</p>
         <p class="event-date">Tuesday, 16 June 2026</p>
         <p class="event-time">After 6:00 PM</p>
-        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul</a></p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul<span class="loc-detail"> · MSP Auditorium</span></a></p>
         <p id="hc-prewedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-2"></canvas>
@@ -842,7 +862,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">Wedding Ceremony</p>
         <p class="event-date">Wednesday, 17 June 2026</p>
         <p class="event-time">4:00 AM – 7:20 AM</p>
-        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul</a></p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/mrAPrXoiysyPEH6n7" target="_blank" rel="noopener noreferrer">📍 Dindigul<span class="loc-detail"> · MSP Auditorium</span></a></p>
         <p id="hc-muhurtham" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-3"></canvas>
@@ -861,7 +881,7 @@ input:disabled, select:disabled, textarea:disabled {
         <p class="event-meaning">&nbsp;</p>
         <p class="event-date">Sunday, 21 June 2026</p>
         <p class="event-time">After 6:00 PM</p>
-        <p class="event-venue"><a href="https://maps.app.goo.gl/fFBtNijfjS7QUNvp8" target="_blank" rel="noopener noreferrer">📍 Pollachi</a></p>
+        <p class="event-venue"><a href="https://maps.app.goo.gl/fFBtNijfjS7QUNvp8" target="_blank" rel="noopener noreferrer">📍 Pollachi<span class="loc-detail"> · Nallappa Mahal</span></a></p>
         <p id="hc-postwedding-reception" style="font-size:11px;color:var(--eucalyptus);margin-top:8px;letter-spacing:1px;"></p>
       </div>
       <canvas class="scratch-canvas" id="sc-4"></canvas>
@@ -1154,7 +1174,7 @@ const T = {
     name1:'Rupadharshnee', fam1:'D/o Sri. R. Radhakrishnan & Smt. R. Umamaheswari',
     name2:'Aravind',      fam2:'S/o Sri D.G.K. Sarguru & Smt. G. Sasikala',
     invite:'invite you to join us in a mindful celebration of our union, rooted in love and respect for the Earth.',
-    rsvpNow:'RSVP Now',
+    <!--rsvpNow:'RSVP Now',-->
     evHeading:'The Celebrations', evSub:'Join us across these sacred days',
     ev:[
       {tag:'Day One · Wedding',  name:'Nichiyathartham',       meaning:'Betrothal Ceremony',  date:'Tuesday, 16 June 2026',   time:'After 12:00 PM',    venue:'📍 Dindigul'},
@@ -1206,10 +1226,10 @@ const T = {
     rsvpNow:'RSVP செய்யுங்கள்',
     evHeading:'விழா நிகழ்வுகள்', evSub:'இந்த புனித நாட்களில் எங்களுடன் கலந்துகொள்ளுங்கள்',
     ev:[
-      {tag:'முதல் நாள் · திருமணம்',    name:'நிச்சயதார்த்தம்',           meaning:'நிச்சயதார்த்த விழா',    date:'செவ்வாய், 16 ஜூன் 2026',  time:'மதியம் 12:00 மணிக்கு பிறகு',    venue:'📍 Dindigul'},
-      {tag:'முதல் நாள் · மாலை',        name:'திருமண முன் வரவேற்பு',      meaning:'கொண்டாட்ட மாலை',       date:'செவ்வாய், 16 ஜூன் 2026',  time:'மாலை 6:00 மணிக்கு பிறகு',       venue:'📍 Dindigul'},
-      {tag:'இரண்டாம் நாள் · திருமணம்', name:'முகூர்த்தம்',               meaning:'திருமண சடங்கு',         date:'புதன், 17 ஜூன் 2026',     time:'காலை 4:00 – காலை 7:20',         venue:'📍 Dindigul'},
-      {tag:'வரவேற்பு விழா',             name:'திருமண பின் வரவேற்பு',     meaning:'',                       date:'ஞாயிறு, 21 ஜூன் 2026',    time:'மாலை 6:00 மணிக்கு பிறகு',       venue:'📍 Pollachi'},
+      {tag:'முதல் நாள் · திருமணம்',    name:'நிச்சயதார்த்தம்',           meaning:'நிச்சயதார்த்த விழா',    date:'செவ்வாய், 16 ஜூன் 2026',  time:'மதியம் 12:00 மணிக்கு பிறகு',    venue:'📍 Dindigul · MSP Auditorium"'},
+      {tag:'முதல் நாள் · மாலை',        name:'திருமண முன் வரவேற்பு',      meaning:'கொண்டாட்ட மாலை',       date:'செவ்வாய், 16 ஜூன் 2026',  time:'மாலை 6:00 மணிக்கு பிறகு',       venue:'📍 Dindigul · MSP Auditorium'},
+      {tag:'இரண்டாம் நாள் · திருமணம்', name:'முகூர்த்தம்',               meaning:'திருமண சடங்கு',         date:'புதன், 17 ஜூன் 2026',     time:'காலை 4:00 – காலை 7:20',         venue:'📍 Dindigul · MSP Auditorium'},
+      {tag:'வரவேற்பு விழா',             name:'திருமண பின் வரவேற்பு',     meaning:'',                       date:'ஞாயிறு, 21 ஜூன் 2026',    time:'மாலை 6:00 மணிக்கு பிறகு',       venue:'📍 Pollachi · Nallappa Mahal'},
     ],
     notesHeading:'விருந்தினர்களுக்கு ஒரு அன்பான வேண்டுகோள்', notesSub:'உங்கள் சிறிய தேர்வுகள் பெரிய மாற்றத்தை உருவாக்கும்',
     notes:[
@@ -1262,14 +1282,21 @@ function applyLang(lang) {
   if (heroBtn) heroBtn.textContent = t.rsvpNow;
   document.querySelector('.events-heading').textContent = t.evHeading;
   document.querySelector('.events-sub').textContent = t.evSub;
-  document.querySelectorAll('.event-card').forEach((card,i) => {
-    const ev = t.ev[i]; if (!ev) return;
-    card.querySelector('.day-tag').textContent = ev.tag;
-    card.querySelector('h3').textContent = ev.name;
-    card.querySelector('.event-meaning').textContent = ev.meaning;
-    card.querySelector('.event-date').textContent = ev.date;
-    card.querySelector('.event-time').textContent = ev.time;
-    card.querySelector('.event-venue').textContent = ev.venue;
+  document.querySelectorAll('.event-card').forEach((card, i) => {
+  const ev = T[evKey][i]
+  if (!ev) return
+  card.querySelector('.day-tag').textContent = ev.tag
+  card.querySelector('h3').textContent = ev.name
+  card.querySelector('.event-meaning').textContent = ev.meaning
+  card.querySelector('.event-date').textContent = ev.date
+  card.querySelector('.event-time').textContent = ev.time
+  // Preserve loc-detail span while updating venue text
+  const link = card.querySelector('.event-venue a')
+  const locDetail = link && link.querySelector('.loc-detail')
+  if (link) {
+    link.textContent = ev.venue
+    if (locDetail) link.appendChild(locDetail)
+  }
   });
   document.querySelector('.notes-section .section-title').textContent = t.notesHeading;
   document.querySelector('.notes-section .section-sub').textContent = t.notesSub;
